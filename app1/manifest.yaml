@@ -109,7 +109,7 @@ metadata:
       #kubernetes.io/ingress.class: alb
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
-      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:311141538313:certificate/aa2e08e8-1ea6-4331-93a7-d983acb8d6cc
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:311141538313:certificate/045a444c-e938-48e7-bc08-8657d036d5a3
       alb.ingress.kubernetes.io/listen-ports: '[ {"HTTPS": 443}]'
       alb.ingress.kubernetes.io/tags: Environment=dev,Team=test
       alb.ingress.kubernetes.io/group.name: expense
