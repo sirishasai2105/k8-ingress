@@ -41,7 +41,7 @@ metadata:
       #kubernetes.io/ingress.class: alb
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
-      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:311141538313:certificate/6e8796c8-807e-48b2-bbeb-04e0a7c2b317
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:311141538313:certificate/045a444c-e938-48e7-bc08-8657d036d5a3
       alb.ingress.kubernetes.io/listen-ports: '[ {"HTTPS": 443}]'
       alb.ingress.kubernetes.io/tags: Environment=dev,Team=test
       alb.ingress.kubernetes.io/group.name: expense # if we won't write same group name for all ingress resources it creates different alb's
