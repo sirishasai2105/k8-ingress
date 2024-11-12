@@ -1,38 +1,106 @@
-kind: Deployment
+# kind: Deployment
+# apiVersion: apps/v1
+# metadata:
+#   name: app-1
+#   labels:
+#     name: app-1
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#         name: app-1
+#   template:
+#     metadata:
+#       labels:
+#         name: app-1
+#     spec:
+#        containers:
+#         - name: app1
+#           image: sirishasai2105/app1:v1
+
+# ---
+# kind: Service
+# apiVersion: v1
+# metadata:
+#   name: app-1
+# spec:
+#   selector:
+#     name: app-1
+#   ports:
+#   - name: app1-svc
+#     protocol: TCP
+#     port: 80
+#     targetPort: 80
+# ---
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#     name: app1
+#     annotations:
+#       #kubernetes.io/ingress.class: alb
+#       alb.ingress.kubernetes.io/scheme: internet-facing
+#       alb.ingress.kubernetes.io/target-type: ip
+#       alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:311141538313:certificate/6e8796c8-807e-48b2-bbeb-04e0a7c2b317
+#       alb.ingress.kubernetes.io/listen-ports: '[ {"HTTPS": 443}]'
+#       alb.ingress.kubernetes.io/tags: Environment=dev,Team=test
+#       alb.ingress.kubernetes.io/group.name: expense # if we won't write same group name for all ingress resources it creates different alb's
+# spec:
+#     ingressClassName: alb
+#     rules:
+#     - host: "app1.reyanshsai.online"
+#       http:
+#         paths:
+#         - pathType: Prefix
+#           path: "/"
+#           backend:
+#             service:
+#               name: app-1
+#               port:
+#                 number: 80
+
+
 apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: app-1
-  labels:
-    name: app-1
+  name: app1
+  labels: # these are replicaset labels
+    name: app1
+    tier: frontend
 spec:
+  # modify replicas according to your case
   replicas: 1
   selector:
+    # these are used to select the pod to create replicas
     matchLabels:
-        name: app-1
+      name: app1
+      tier: frontend
+  # this is pod definition
   template:
     metadata:
+      # these labels belongs to pod
       labels:
-        name: app-1
+        name: app1
+        tier: frontend
     spec:
-       containers:
-        - name: app1
-          image: sirishasai2105/app1:v1
-
+      containers:
+      - name: app1
+        image: joindevops/app1:v1
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: app-1
+  name: app1
 spec:
   selector:
-    name: app-1
+    name: app1
+    tier: frontend
   ports:
-  - name: app1-svc
+  - name: nginx-svc-port
     protocol: TCP
-    port: 80
-    targetPort: 80
+    port: 80 # service port
+    targetPort: 80 # container port
 ---
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -44,7 +112,7 @@ metadata:
       alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:311141538313:certificate/6e8796c8-807e-48b2-bbeb-04e0a7c2b317
       alb.ingress.kubernetes.io/listen-ports: '[ {"HTTPS": 443}]'
       alb.ingress.kubernetes.io/tags: Environment=dev,Team=test
-      alb.ingress.kubernetes.io/group.name: expense # if we won't write same group name for all ingress resources it creates different alb's
+      alb.ingress.kubernetes.io/group.name: expense
 spec:
     ingressClassName: alb
     rules:
@@ -55,8 +123,6 @@ spec:
           path: "/"
           backend:
             service:
-              name: app-1
+              name: app1
               port:
                 number: 80
-
-
