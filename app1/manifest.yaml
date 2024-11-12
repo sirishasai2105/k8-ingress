@@ -96,7 +96,7 @@ spec:
     name: app1
     tier: frontend
   ports:
-  - name: nginx-svc-port
+  - name: app1
     protocol: TCP
     port: 80 # service port
     targetPort: 80 # container port
